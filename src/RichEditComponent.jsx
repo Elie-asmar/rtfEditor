@@ -23,12 +23,19 @@ class RichEditComponent extends React.Component {
         const options = createOptions();
 
         let FilesTab = options.ribbon.getTab(RibbonTabType.File);
+        options.ribbon.removeTab(FilesTab)
         // FilesTab.removeItem(FileTabItemId.OpenDocument)
         // FilesTab.removeItem(FileTabItemId.CreateNewDocument)
         // FilesTab.removeItem(FileTabItemId.ExportDocument)
         // FilesTab.removeItem(FileTabItemId.Download)
-
-
+        let ViewTab = options.ribbon.getTab(RibbonTabType.View);
+        options.ribbon.removeTab(ViewTab);
+        let PageLayoutTab = options.ribbon.getTab(RibbonTabType.PageLayout);
+        options.ribbon.removeTab(PageLayoutTab);
+        let ReferencesTab = options.ribbon.getTab(RibbonTabType.References);
+        options.ribbon.removeTab(ReferencesTab);
+        let MailTab = options.ribbon.getTab(RibbonTabType.MailMerge);
+        options.ribbon.removeTab(MailTab);
 
 
 
@@ -147,18 +154,13 @@ class RichEditComponent extends React.Component {
 
         options.readOnly = false;
         options.width = '1400px';
-        options.height = '900px';
+        options.height = '400px';
         options.authentication = "1234"
 
         if (!this.created) {
             this.rich = create(document.getElementById("richEdit"), options);
             this.created = true
         }
-
-
-
-
-
 
     }
 
