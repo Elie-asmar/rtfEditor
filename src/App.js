@@ -10,22 +10,17 @@ function App() {
   const DB_LINK = useRef('http://183.183.183.122/CtsWebService_LabRad/DataService.svc/web/');
 
   const handleSave = useCallback(
-    (s, e) => {
-      e.handled = true;
-      // console.log(s)
-      // console.log(e)
-      // console.log(e.base64);
-      // console.log(e.fileName);
-      // //DocumentFormat.OpenXml
-      // //DocumentFormat.PlainText
-      // //DocumentFormat.Rtf
-      // console.log(e.format); //in DocumentFormat
+    async () => {
+
+
+
       let _data = {
         centerid: mystate.centerid,
         resultid: mystate.resultid,
         resyear: mystate.resyear,
-        payload: e.base64
+        payload: await rtfRef.current.awaitableExportToRTF()
       };
+
 
       axios({
         method: "post",
@@ -74,10 +69,12 @@ function App() {
   return (
     <>
       <button onClick={() => {
-        rtfRef.current.rich.saveDocument(rtfRef.current.DocFormat.Rtf)
+        //rtfRef.current.rich.hasUnsavedChanges = true
+        //rtfRef.current.rich.saveDocument(rtfRef.current.DocFormat.Rtf)
+        handleSave()
 
       }}>Trigger Save From Outer Component</button>
-      <RichEditComponent ref={rtfRef} handleSave={handleSave} />
+      <RichEditComponent ref={rtfRef} />
     </>
   );
 }

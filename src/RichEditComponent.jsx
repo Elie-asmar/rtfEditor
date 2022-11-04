@@ -16,7 +16,16 @@ class RichEditComponent extends React.Component {
         this.DocFormat = DocumentFormat
         this.options = createOptions();
 
+
     }
+    awaitableExportToRTF = () => new Promise((rs, rj) => {
+        this.rich.hasUnsavedChanges = false
+        this.rich.exportToBase64((b64str) => {
+            rs(b64str)
+        }, DocumentFormat.Rtf)
+
+
+    })
 
 
 
@@ -79,6 +88,9 @@ class RichEditComponent extends React.Component {
         this.options.events.lostFocus = () => { };
         this.options.events.pointerDown = () => { };
         this.options.events.pointerUp = () => { };
+        this.options.events.saved = (s, e) => {
+            console.log('zzzzzzzzzzz')
+        }
 
         this.options.events.saving = this.props.handleSave
         // this.options.events.saved = (s, e) => {
@@ -92,6 +104,7 @@ class RichEditComponent extends React.Component {
         //     //DocumentFormat.Rtf
         //     console.log(e.format); //in DocumentFormat
         // };
+
         this.options.events.selectionChanged = () => { };
         this.options.events.customCommandExecuted = (s, e) => {
             switch (e.commandName) {
